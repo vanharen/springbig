@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "@material-ui/core": "^4.9.7",
+    "@material-ui/icons": "^4.9.1",
+    "@rails/webpacker": "4.2.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "typeface-roboto": "^0.0.75",
+    "webpack": "^4.42.0"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.10.3"
+  },
+  "name": "springbig",
+  "version": "1.0.0",
+  "description": "Springbig test project",
+  "main": "index.js",
+  "repository": "https://github.com/vanharen/springbig.git",
+  "author": "Chris VanHaren <vanharen@gmail.com>",
+  "license": "MIT",
+  "private": true
+}
