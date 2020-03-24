@@ -1,4 +1,13 @@
-= form_for @user_file do |f|
+javascript:
+  function validateForm() {
+    var x = document.forms["new_user_file"]["user_file_name"].value;
+    if (x.length < 1) {
+      alert("File name must be at least one character long, please!");
+      return false;
+    }
+  }
+
+= form_for @user_file, html: { onsubmit: "return validateForm()" } do |f|
   - if @user_file.errors.any?
     #error_explanation
       h2 = "#{pluralize(@user_file.errors.count, "error")} prohibited this user_file from being saved:"
@@ -7,7 +16,8 @@
           li = message
 
   .field
-    = f.label :name
+    = f.label :name, 'File Identifier: '
     = f.text_field :name
+    br
     = f.file_field :csv_file
-  .actions = f.submit
+  .actions = f.submit 'Submit', data: { disable_with: false }
