@@ -1,9 +1,52 @@
 p#notice = notice
 
 p
-  strong Name:
+  b File ID: 
   = @user_file.name
 
-=> link_to 'Edit', edit_user_file_path(@user_file)
-'|
-=< link_to 'Back', user_files_path
+h4 Successfully imported rows
+
+table class="index_table"
+  thead
+    tr
+      th Row Number
+      th First Name
+      th Last Name
+      th Phone
+      th Email
+
+  tbody
+    - @user_file.users.without_error.each do |user|
+      tr class="#{cycle("even", "odd")}"
+        td = user.row_number
+        td = user.first
+        td = user.last
+        td = user.phone
+        td = user.email
+
+- if @user_file.users.with_error.count >0
+  h4 Rows with errors
+
+  table class="index_table"
+    thead
+      tr
+        th Row Number
+        th First Name
+        th Last Name
+        th Phone
+        th Email
+        th Error String
+
+    tbody
+      - @user_file.users.with_error.each do |user|
+        tr class="#{cycle("even", "odd")}"
+          td = user.row_number
+          td = user.first
+          td = user.last
+          td = user.phone
+          td = user.email
+          td = user.error_string
+
+br
+
+= link_to 'Back', user_files_path
