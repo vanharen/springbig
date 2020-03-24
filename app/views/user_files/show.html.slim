@@ -4,26 +4,39 @@ p
   b File ID: 
   = @user_file.name
 
-h4 Successfully imported rows
+/ If there are no rows yet (due to ActiveJob not having had a chance
+/ to import them yet, let the user know.
+/
+- if @user_file.users.count == 0
+  p
+    b File has been uploaded but no rows have been imported yet.
+      Please check back in a few moments.
 
-table class="index_table"
-  thead
-    tr
-      th Row Number
-      th First Name
-      th Last Name
-      th Phone
-      th Email
+/ If there are successfully imported rows, display them
+/
+- if @user_file.users.without_error.count >0
+  h4 Successfully imported rows
 
-  tbody
-    - @user_file.users.without_error.each do |user|
-      tr class="#{cycle("even", "odd")}"
-        td = user.row_number
-        td = user.first
-        td = user.last
-        td = user.phone
-        td = user.email
+  table class="index_table"
+    thead
+      tr
+        th Row Number
+        th First Name
+        th Last Name
+        th Phone
+        th Email
 
+    tbody
+      - @user_file.users.without_error.each do |user|
+        tr class="#{cycle("even", "odd")}"
+          td = user.row_number
+          td = user.first
+          td = user.last
+          td = user.phone
+          td = user.email
+
+/ If there are rows with errors, display them
+/
 - if @user_file.users.with_error.count >0
   h4 Rows with errors
 
