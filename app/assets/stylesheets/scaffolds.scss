@@ -4,7 +4,7 @@ body {
   margin: 33px; }
 
 body, p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 13px;
   line-height: 18px; }
 
@@ -62,4 +62,21 @@ div.actions {
   list-style: square; }
 
 label {
-  display: block; }
+  display: inline; }
+
+hr {
+  border-style: solid;
+  border-width: thin;
+  border-color: #ddd; }
+
+.slogan {
+  color: #888;
+  font-style: italic; }
+
+table { border-collapse: collapse; }
+
+.index_table {
+  table, th, td { border: 1px solid black; }
+  th    { background: #aaa; }
+  .odd  { background: #ccc; }
+  .even { background: #eee; } }
