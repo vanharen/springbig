@@ -9,4 +9,14 @@
 #
 class UserFile < ApplicationRecord
   has_one_attached :csv_file
+  has_many :users
+
+  def num_rows
+    users.count
+  end
+
+  def num_errors
+    users.with_error.count
+  end
+
 end
