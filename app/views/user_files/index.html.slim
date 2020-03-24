@@ -1,21 +1,19 @@
-h1 Listing user_files
+h3 Uploaded Files
 
-table
+table class="index_table"
   thead
     tr
-      th Name
-      th
-      th
-      th
+      th File ID
+      th Records
+      th Errors
 
   tbody
     - @user_files.each do |user_file|
-      tr
-        td = user_file.name
-        td = link_to 'Show', user_file
-        td = link_to 'Edit', edit_user_file_path(user_file)
-        td = link_to 'Destroy', user_file, data: { confirm: 'Are you sure?' }, method: :delete
+      tr class="#{cycle("even", "odd")}"
+        td = link_to user_file.name, user_file
+        td = user_file.num_rows
+        td = user_file.num_errors
 
 br
 
-= link_to 'New User file', new_user_file_path
+= link_to 'Upload a file', new_user_file_path
