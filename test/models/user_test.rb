@@ -16,7 +16,12 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "should not save without a user_file" do
+    assert_not User.new.save, "saved without a user_file"
+  end
+
+  test "should save with a valid user_file id" do
+    uf = UserFile.create
+    assert_not_nil uf.users.create, "saved with a user_file object"
+  end
 end

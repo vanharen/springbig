@@ -10,7 +10,8 @@
 require 'test_helper'
 
 class UserFileTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test "should create a new user_file" do
+    uf = UserFile.create
+    assert_not_nil uf, "saved user_file object"
+  end
 end
