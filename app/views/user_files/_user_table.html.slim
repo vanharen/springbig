@@ -6,6 +6,7 @@ table class="index_table"
       th Last Name
       th Phone
       th Email
+      th Error String
 
   tbody
     - @users.each do |user|
@@ -16,3 +17,4 @@ table class="index_table"
         td = user.last
         td = phone
         td = user.email
+        td = user.error_string
