@@ -38,7 +38,7 @@ Postgres. Some JavaScript is allowed, as are appropriate gems.
    - After this validation succeeds, the CSV file is uploaded for
      processing by the asynchronous back-end task with no further
      validation at submit time.
- - **Asynchronous Back-end Process**
+  - **Asynchronous Back-end Process**
    - The back-end process processes CSV files uploaded to the system,
      subject to the input file format rules.
    - Once basic validations are completed, the process stores each
@@ -46,7 +46,7 @@ Postgres. Some JavaScript is allowed, as are appropriate gems.
    - Any record that does not conform to the format rules is not processed
      and the respective error is recorded for later display.
 
- - **Output Web Page**
+  - **Output Web Page**
    - The output web page reads the database and displays processed data as
      follows.
    - For each of the Identifiers entered by the user, it lists with
