@@ -9,7 +9,7 @@
 #
 class UserFile < ApplicationRecord
   has_one_attached :csv_file
-  has_many :users
+  has_many :users, dependent: :destroy
 
   def num_rows
     users.count
