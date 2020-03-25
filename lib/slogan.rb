@@ -1,7 +1,7 @@
 class Slogan
   VERBS = %w{Creating Developing Mandating Building Usurping}
   WHEN  = %w{tomorrow today yesterday}
-  WHAT  = %w{technology solutions genetics }
+  WHAT  = %w{technology solutions genetics}
   ADJS  = %w{brighter sunnier happier dominant}
 
   def madlibs
