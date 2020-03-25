@@ -8,7 +8,9 @@ class UserFileImportJob < ApplicationJob
     # Grab the data from the blob
     csv_file = user_file.csv_file.download
     # SmarterCSV will return an array of hashes for each line
-    csv_data = SmarterCSV.process(StringIO.new(csv_file),
+    io = StringIO.new(csv_file)
+    io.set_encoding "utf-8"
+    csv_data = SmarterCSV.process(io,
                                   { convert_values_to_numeric: false })
 
     # Iterate over the lines, validating the data and creating User
