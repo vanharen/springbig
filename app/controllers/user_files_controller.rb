@@ -21,30 +21,23 @@ class UserFilesController < ApplicationController
   # POST /user_files.json
   def create
     @user_file = UserFile.find_by_name(params["user_file"]["name"])
+    @user_file.destroy if @user_file
 
-    if @user_file
-      respond_to do |format|
-        if @user_file.update(user_file_params)
-          format.html { redirect_to @user_file, notice: 'User file was successfully updated.' }
-          format.json { render :show, status: :ok, location: @user_file }
-        else
-          format.html { render :edit }
-          format.json { render json: @user_file.errors, status: :unprocessable_entity }
-        end
-      end
-    else
-      @user_file = UserFile.new(user_file_params)
+    # Create a new user_file
+    @user_file = UserFile.new(user_file_params)
 
-      respond_to do |format|
-        if @user_file.save
-          format.html { redirect_to @user_file, notice: 'User file was successfully created.' }
-          format.json { render :show, status: :created, location: @user_file }
-        else
-          format.html { render :new }
-          format.json { render json: @user_file.errors, status: :unprocessable_entity }
-        end
+    respond_to do |format|
+      if @user_file.save
+        format.html { redirect_to @user_file, notice: 'User file was successfully uploaded.' }
+        format.json { render :show, status: :created, location: @user_file }
+      else
+        format.html { render :new }
+        format.json { render json: @user_file.errors, status: :unprocessable_entity }
       end
     end
+
+    # Queue the file for processing by ActiveJob
+    UserFileImportJob.set(wait: 5.seconds).perform_later @user_file
   end
 
   private

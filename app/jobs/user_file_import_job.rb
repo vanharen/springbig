@@ -12,20 +12,17 @@ class UserFileImportJob < ApplicationJob
 
     # Iterate over the lines, validating the data and creating User
     # records, adding row_number and user_file_id to the hash
-    csv_data.each_with_index { |a, idx|
+    csv_data.each_with_index { |user_hash, idx|
 
-      # Add user_file_id and row_number to hash
-      user_hash[:user_file_id] = user_file.id
+      # Make sure everything is strings, because SmarterCSV will
+      # return ints for things that look like ints
+      user_hash.each { |k,v| user_hash[k] = v.to_s }
+
+      # Add row_number to hash
       user_hash[:row_number] = idx
 
       errors = []
 
-      phone = user_hash[:phone]
-      phone.gsub!(/[-\.\(\)]/, '')            # Strip dash, dot, parens
-      errors << "Invalid phone number"  if !phone_valid?(phone)
-
-      errors << "Invalid email address" if !email_valid?(user_hash[:email])
- 
       first, last = user_hash[:first], user_hash[:last]
       errors << "Invalid first name"    if !name_valid?(first)
       errors << "Invalid last name"     if !name_valid?(last)
@@ -34,11 +31,16 @@ class UserFileImportJob < ApplicationJob
       #   last name cannot be specified if first name is not present.
       errors << "Last name may not be present without first name" if (first.nil? && !last.nil?)
         
+      phone = user_hash[:phone]
+      phone.gsub!(/[-\.\(\)]/, '')            # Strip dash, dot, parens
+      errors << "Invalid phone number"  if !phone_valid?(phone)
+
+      errors << "Invalid email address" if !email_valid?(user_hash[:email])
+
       # Any errors to report?
       user_hash[:error_string] = errors.join(", ") if !errors.empty?
 
-      u = User.new(user_hash)
-      u.save
+      user_file.users.create(user_hash)
     }
   end
 
@@ -66,6 +68,7 @@ class UserFileImportJob < ApplicationJob
   #     not be first or last, nor two periods in a row
   #   - "local_part" must be <= 64 chars
   #   - "domain" must be <= 255 chars and consist of alphanumerics plus "-"
+  #   - "domain" must contain at least one period in the middle of the string
   #   - for simplicity we will ignore the requirement that hyphen
   #     not be first or last, nor that the TLD be not all-numeric
   def email_valid?(email)
@@ -73,6 +76,9 @@ class UserFileImportJob < ApplicationJob
     return false if parts.size != 2
 
     local_part, domain = parts
+
+    return false if domain.split(".").size < 2 # must have one period
+
     /^[\w!\#$%&'*+-\/=?^_`.{\|}~]{1,64}$/.match?(local_part) &&
       /^[A-Za-z0-9\-\.]{1,255}$/.match?(domain)
   end
