@@ -1,18 +1,24 @@
 h3 Uploaded Files
 
-table class="index_table"
-  thead
-    tr
-      th File ID
-      th Records
-      th Errors
+- if @user_files.count == 0
+  p
+    b No files uploaded yet.  Please feel free to upload one, and
+      let's see what happens, hmm?
 
-  tbody
-    - @user_files.each do |user_file|
-      tr class="#{cycle("even", "odd")}"
-        td = link_to user_file.name, user_file
-        td = user_file.num_rows
-        td = user_file.num_errors
+- else
+  table class="index_table"
+    thead
+      tr
+        th File ID
+        th Records
+        th Errors
+
+    tbody
+      - @user_files.each do |user_file|
+        tr class="#{cycle("even", "odd")}"
+          td = link_to user_file.name, user_file
+          td = user_file.num_rows
+          td = user_file.num_errors
 
 br
 
