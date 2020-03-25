@@ -2,9 +2,15 @@
  - [x] Create private Github repo
  - [x] Create README.md, with contents of project description
  - [x] Create Heroku repo master
- - [x] Install/configure MySQL HK Add-on
+ - [x] Install/configure Postgres HK Add-on
  - [x] Generate Rails6 app
  - [x] Try out slim instead of haml
  - [x] Generate models, views, controllers
- - [ ] 
- 
+ - [x] Create ActiveJob handler to import user records
+ - [x] Use smarter_csv to process files
+ - [x] Have some fun! (madlibs slogan :-)
+ - [x] Configure puma for 2 workers
+ - [x] Configure Procfile for heroku
+ - [x] Test on heroku
+ - [x] Play with S3 mirror for ActiveStorage
+ - [ ] Configure resque or sidekiq to handle queue instead of in-process queue
