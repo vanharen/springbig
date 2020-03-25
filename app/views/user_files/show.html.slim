@@ -14,53 +14,19 @@ p
 
 / If there are successfully imported rows, display them
 /
-- if @user_file.users.without_error.count >0
+- @users = @user_file.users.without_error
+- if @users.count > 0
   h4 Successfully imported rows
 
-  table class="index_table"
-    thead
-      tr
-        th Row Number
-        th First Name
-        th Last Name
-        th Phone
-        th Email
-
-    tbody
-      - @user_file.users.without_error.each do |user|
-        - p = user.phone; phone = [ p[0..2], p[3..5], p[6..-1] ].compact.join("-")
-        tr class="#{cycle("even", "odd")}"
-          td = user.row_number
-          td = user.first
-          td = user.last
-          td = phone
-          td = user.email
+  == render 'user_table'
 
 / If there are rows with errors, display them
 /
-- if @user_file.users.with_error.count >0
+- @users = @user_file.users.with_error
+- if @users.count > 0
   h4 Rows with errors
 
-  table class="index_table"
-    thead
-      tr
-        th Row Number
-        th First Name
-        th Last Name
-        th Phone
-        th Email
-        th Error String
-
-    tbody
-      - @user_file.users.with_error.each do |user|
-        - p = user.phone; phone = [ p[0..2], p[3..5], p[6..-1] ].compact.join("-")
-        tr class="#{cycle("even", "odd")}"
-          td = user.row_number
-          td = user.first
-          td = user.last
-          td = phone
-          td = user.email
-          td = user.error_string
+  == render 'user_table'
 
 br
 
