@@ -28,11 +28,12 @@ p
 
     tbody
       - @user_file.users.without_error.each do |user|
+        - p = user.phone; phone = [ p[0..2], p[3..5], p[6..-1] ].compact.join("-")
         tr class="#{cycle("even", "odd")}"
           td = user.row_number
           td = user.first
           td = user.last
-          td = "#{user.phone[0,3]}-#{user.phone[3,3]}-#{user.phone[6,4]}"
+          td = phone
           td = user.email
 
 / If there are rows with errors, display them
@@ -52,11 +53,12 @@ p
 
     tbody
       - @user_file.users.with_error.each do |user|
+        - p = user.phone; phone = [ p[0..2], p[3..5], p[6..-1] ].compact.join("-")
         tr class="#{cycle("even", "odd")}"
           td = user.row_number
           td = user.first
           td = user.last
-          td = "#{user.phone[0,3]}-#{user.phone[3,3]}-#{user.phone[6,4]}"
+          td = phone
           td = user.email
           td = user.error_string
 
