@@ -8,15 +8,12 @@ class UserFileImportJob < ApplicationJob
     # Grab the data from the blob
     csv_file = user_file.csv_file.download
     # SmarterCSV will return an array of hashes for each line
-    csv_data = SmarterCSV.process(StringIO.new(csv_file))
+    csv_data = SmarterCSV.process(StringIO.new(csv_file),
+                                  { convert_values_to_numeric: false })
 
     # Iterate over the lines, validating the data and creating User
     # records, adding row_number and user_file_id to the hash
     csv_data.each_with_index { |user_hash, idx|
-
-      # Make sure everything is strings, because SmarterCSV will
-      # return ints for things that look like ints
-      user_hash.each { |k,v| user_hash[k] = v.to_s }
 
       # Add row_number to hash
       user_hash[:row_number] = idx
@@ -53,7 +50,7 @@ class UserFileImportJob < ApplicationJob
   #   0-origin indexing, positions 0 and 3 may not contain
   #   characters ‘0’ or ‘1’.
   def phone_valid?(phone)
-    /[0-9]{10}/.match?(phone) &&
+    /^[0-9]{10}$/.match?(phone) &&
       ([phone[0],phone[3]] & ["0","1"]).empty?  # Union empty?
   end
       
