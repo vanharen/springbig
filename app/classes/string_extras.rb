@@ -1,5 +1,5 @@
 # coding: utf-8
-class String
+module StringExtras
 
   # - Phone numbers may contain characters 0-9,-,.(,). Punctuation
   #   need not adhere to a particular format or match,
