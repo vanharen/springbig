@@ -8,6 +8,7 @@ module StringExtras
   #   0-origin indexing, positions 0 and 3 may not contain
   #   characters ‘0’ or ‘1’.
   def valid_phone?
+    self.gsub!(/[-\.\(\) ]/, '')               # Strip dash, dot, parens, space
     /^[0-9]{10}$/.match?(self) &&
       ([self[0],self[3]] & ["0","1"]).empty?  # Union empty?
   end
@@ -32,7 +33,7 @@ module StringExtras
 
     local_part, domain = parts
 
-    return false if domain.split(".").size < 2 # must have one period
+    return false if domain.split(".").size < 2 # must have at least one period
 
     /^[\w!\#$%&'*+-\/=?^_`.{\|}~]{1,64}$/.match?(local_part) &&
       /^[A-Za-z0-9\-\.]{1,255}$/.match?(domain)
