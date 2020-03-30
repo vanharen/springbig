@@ -31,7 +31,6 @@ class UserFileImportJob < ApplicationJob
       errors << "Last name may not be present without first name" if (first.nil? && !last.nil?)
 
       phone = user_hash[:phone]
-      phone.gsub!(/[-\.\(\)]/, '')            # Strip dash, dot, parens
       errors << "Invalid phone number"  if !phone&.valid_phone?
 
       email = user_hash[:email]
