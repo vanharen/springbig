@@ -32,7 +32,7 @@ class UserFilesControllerTest < ActionDispatch::IntegrationTest
     assert_enqueued_jobs 2
 
     perform_enqueued_jobs
-    assert_equal(4, user_file.users.with_error.count)
+    assert_equal(6, user_file.users.with_error.count)
     assert_equal(1, user_file.users.without_error.count)
   end
 
@@ -70,7 +70,7 @@ class UserFilesControllerTest < ActionDispatch::IntegrationTest
     assert_enqueued_jobs 2
 
     perform_enqueued_jobs
-    assert_equal(4, user_file.users.with_error.count)
+    assert_equal(6, user_file.users.with_error.count)
     assert_equal(1, user_file.users.without_error.count)
   end
 
