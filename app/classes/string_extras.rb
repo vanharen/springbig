@@ -11,7 +11,7 @@ module StringExtras
     /^[0-9]{10}$/.match?(self) &&
       ([self[0],self[3]] & ["0","1"]).empty?  # Union empty?
   end
-      
+
   # - Email addresses must be standard and valid.
   #   For this we will *mostly* follow RFC 3696 rules
   #     (see: https://en.wikipedia.org/wiki/Email_address,

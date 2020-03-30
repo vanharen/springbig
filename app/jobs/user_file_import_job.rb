@@ -22,20 +22,20 @@ class UserFileImportJob < ApplicationJob
 
       errors = []
 
-      first, last = user_hash[:first], user_hash[:last]
+      first, last = user_hash[:first] || "", user_hash[:last] || ""
       errors << "Invalid first name"    if !first.valid_name?
       errors << "Invalid last name"     if !last.valid_name?
-      
+
       # - Neither first name or last name are required, however, the
       #   last name cannot be specified if first name is not present.
       errors << "Last name may not be present without first name" if (first.nil? && !last.nil?)
-        
+
       phone = user_hash[:phone]
       phone.gsub!(/[-\.\(\)]/, '')            # Strip dash, dot, parens
-      errors << "Invalid phone number"  if !phone.valid_phone?
+      errors << "Invalid phone number"  if !phone&.valid_phone?
 
       email = user_hash[:email]
-      errors << "Invalid email address" if !email.valid_email?
+      errors << "Invalid email address" if !email&.valid_email?
 
       # Any errors to report?
       user_hash[:error_string] = errors.join(", ") if !errors.empty?
